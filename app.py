@@ -18,9 +18,9 @@ def summarize_page():
 	uploaded_file = st.file_uploader("Select a PDF for summarization", type=["pdf"], key="summarize_upload")
 	if uploaded_file is not None:
 		# Optional: Save the uploaded file locally if you need filesystem access
-		os.makedirs("/workspace/data", exist_ok=True)
+		os.makedirs("data", exist_ok=True)
 		safe_name = os.path.basename(uploaded_file.name).replace(" ", "_")
-		pdf_path = os.path.join("/workspace/data", safe_name)
+		pdf_path = os.path.join("data", safe_name)
 		with open(pdf_path, "wb") as f:
 			f.write(uploaded_file.getbuffer())
 
@@ -45,9 +45,9 @@ def chat_page():
 	st.write("Upload your PDF to ask questions below:")
 	uploaded_file = st.file_uploader("Select a PDF for Q&A", type=["pdf"], key="chat_upload")
 	if uploaded_file:
-		os.makedirs("/workspace/data", exist_ok=True)
+		os.makedirs("data", exist_ok=True)
 		safe_name = os.path.basename(uploaded_file.name).replace(" ", "_")
-		pdf_path = os.path.join("/workspace/data", safe_name)
+		pdf_path = os.path.join("data", safe_name)
 		with open(pdf_path, "wb") as f:
 			f.write(uploaded_file.getbuffer())
 
@@ -56,7 +56,7 @@ def chat_page():
 			st.error("No textual content extracted from PDF.")
 		else:
 			chunks_with_sources = chunk_text_with_sources(pages, chunk_size=800, chunk_overlap=150)
-			index_dir = os.path.join("/workspace/faiss_index", safe_name)
+			index_dir = os.path.join("faiss_index", safe_name)
 			if "chat_vdb" in st.session_state and st.session_state.get("chat_vdb_key") == index_dir:
 				vectordb = st.session_state.chat_vdb
 			elif index_exists(index_dir):
@@ -112,4 +112,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
