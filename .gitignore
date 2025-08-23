@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+.streamlit/
+*.pyc
+*.pyo
+*.DS_Store
+data/
+faiss_index/
+venv/
+.venv/
